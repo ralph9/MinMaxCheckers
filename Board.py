@@ -14,15 +14,15 @@ MIN = "black"
 
 class CheckersBoard:
     board = []
-    
-    #array of positions where the pieces of both sides are placed during 
+
+    #array of positions where the pieces of both sides are placed during
     #the current state of the board
     whitePiecesPositions = []
     blackPiecesPositions = []
-       
+
     def __init__(self,board):
         self.board = board
-             
+
     def printBoard(self):
         for row in self.board:
             for square in row:
@@ -37,7 +37,8 @@ class CheckersBoard:
                     else:
                         print(" - ", end="")
             print("")
-                        
+
+
     def getAllPossibleMoves(self,colorForMoves):
         #first we retrieve the position of the pieces for the current
         #state of the board (we have to empty the old position data before)
@@ -49,26 +50,26 @@ class CheckersBoard:
         for row in range(len(self.board)):
             for col in range(len(self.board[0])):
                 #if the square can be occupied (thus, it is a black square)
-                if self.board[row][col][0] == True: 
+                if self.board[row][col][0] == True:
                     #if there is currently a piece in that square
                     if self.board[row][col][1] is not None:
                         if colorForMoves == MIN and self.board[row][col][1].isBlack == True:
                            self.blackPiecesPositions.append([row,col])
                         elif colorForMoves == MAX and self.board[row][col][1].isBlack == False:
                            self.whitePiecesPositions.append([row,col])
-                                    
-       
-        #first we have to consider the possible captures, since they are 
+
+
+        #first we have to consider the possible captures, since they are
         #forced moves, otherwise we will consider normal moves
         listOfMoves = self.getPossibleCaptures(colorForMoves)
-        
+
         #since captures are forced, even with only one the rest of the moves
         #don't have to be considered
         if len(listOfMoves) == 0:
             allMoves = self.getNormalMoves(colorForMoves)
             if not isinstance(allMoves, TreeNode):
                 filteredListOfMoves = filter(None.__ne__, allMoves)
-                listOfMoves = list(filteredListOfMoves)     
+                listOfMoves = list(filteredListOfMoves)
                 allMoves = listOfMoves
             return allMoves
         else:
@@ -79,17 +80,17 @@ class CheckersBoard:
                 capturePositionToAdd = self.getRecursiveCaptures(capture[0],capture[1],capture[2])
                 listOfFinalCapturePositions.append(capturePositionToAdd)
             filteredListOfCaptures = filter(None.__ne__, listOfFinalCapturePositions)
-            listOfFinalCapturePositions = list(filteredListOfCaptures)    
+            listOfFinalCapturePositions = list(filteredListOfCaptures)
             if len(listOfFinalCapturePositions) == 0:
                 print("something wrong")
-                return [] 
+                return []
             return listOfFinalCapturePositions
-                
+
     def getRecursiveCaptures(self, initialTreeNode, row,col):
         #if we have a capture, we call recursively for each one until we reach
         #the end of the jump move, in that case we return the final treeNode
         listOfMoreCaptures = self.checkForMoreCaptures(initialTreeNode,row,col)
-        #print("len") 
+        #print("len")
         if len(listOfMoreCaptures) == 0:
             #if no more captures are possible then we return the original & fin
             return initialTreeNode
@@ -99,7 +100,7 @@ class CheckersBoard:
             for capture in listOfMoreCaptures:
                 return self.getRecursiveCaptures(capture[0],capture[1],capture[2])
         #return initialTreeNode
-        
+
     def getPossibleCaptures(self,colorForMoves):
        listOfCaptures = []
        #depending on the color the direction of the capture is different,
@@ -110,19 +111,19 @@ class CheckersBoard:
                 row = positionOfPiece[0]
                 col = positionOfPiece[1]
                 if self.board[row][col][1].isKing:
-                    #found a king on the board, gotta react differently 
+                    #found a king on the board, gotta react differently
                     listOfCaptures.append(self.getBlackCaptures(row,col,False))
                     listOfCaptures.append(self.getWhiteCaptures(row,col,True))
                 else:
                     listOfCaptures.append(self.getBlackCaptures(row,col,False))
-             
+
        #calculate captures for the white pieces
        else:
             for positionOfPiece in self.whitePiecesPositions:
                 row = positionOfPiece[0]
                 col = positionOfPiece[1]
                 if self.board[row][col][1].isKing:
-                    #found a king on the board, gotta react differently 
+                    #found a king on the board, gotta react differently
                     #normal captures for a black piece
                     listOfCaptures.append(self.getWhiteCaptures(row,col,False))
                     #plus the captures for a black one with the colour reversed
@@ -137,7 +138,7 @@ class CheckersBoard:
     def getBlackCaptures(self,row,col,isWhiteKing):
                 if col != 0 and col != BOARD_SIZE-2 and col != BOARD_SIZE-1 and row+2 < BOARD_SIZE:
                     #check for the diagonal capture left move validity
-                        #if on diagonal to the left we have a white piece, 
+                        #if on diagonal to the left we have a white piece,
                     #we might be able to capture
                      if isinstance(self.board[row+1][col-1][1], Piece):
                           if self.board[row+1][col-1][1].isBlack == isWhiteKing:
@@ -148,7 +149,7 @@ class CheckersBoard:
                                     return nodeWithInfo
                     #check for diagonal capture right move validity
                      if isinstance(self.board[row+1][col+1][1], Piece):
-                         #if on diagonal to the left we have a white piece, 
+                         #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                           if self.board[row+1][col+1][1].isBlack == isWhiteKing:
                             #check it is in board dimensions
@@ -160,7 +161,7 @@ class CheckersBoard:
                 #check for the first column captures, only to the right and down
                 elif col == 0 and row+2 < BOARD_SIZE:
                     if isinstance(self.board[row+1][col+1][1], Piece):
-                     #if on diagonal to the left we have a white piece, 
+                     #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                         if self.board[row+1][col+1][1].isBlack == isWhiteKing:
                             #check it is in board dimensions
@@ -178,15 +179,15 @@ class CheckersBoard:
                                     captureTreeNode = self.generateTreeNodeWithCapture(row,col,row+2,col-2, None)
                                     nodeWithInfo = [captureTreeNode, row+2,col-2]
                                     return nodeWithInfo
-                                
-                                
+
+
     def getWhiteCaptures(self, row,col, isBlackKing):
                 #check for middle columns captures, to both sides as long
                 #as the row is one where a capture is possible
                 if col != 0 and col != BOARD_SIZE-2 and col != BOARD_SIZE-1 and row > 1:
                     #check for the diagonal capture left move validity
                     if isinstance(self.board[row-1][col-1][1], Piece):
-                        #if on diagonal to the left we have a white piece, 
+                        #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                         if self.board[row-1][col-1][1].isBlack != isBlackKing:
                             if col-2 >= 0 and row-2 >= 0:
@@ -196,7 +197,7 @@ class CheckersBoard:
                                     return nodeWithInfo
                     #check for diagonal capture right move validity
                     if isinstance(self.board[row-1][col+1][1], Piece):
-                         #if on diagonal to the left we have a white piece, 
+                         #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                         if self.board[row-1][col+1][1].isBlack != isBlackKing:
                             if row-2 >= 0 and col+2 < BOARD_SIZE:
@@ -207,7 +208,7 @@ class CheckersBoard:
                 #check for the first column captures, only to the right and down
                 elif col == 0 and row-2 >= 0:
                     if isinstance(self.board[row-1][col+1][1], Piece):
-                     #if on diagonal to the left we have a white piece, 
+                     #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                         if self.board[row-1][col+1][1].isBlack != isBlackKing:
                             #check it is within board dimensions
@@ -219,7 +220,7 @@ class CheckersBoard:
                 elif (col == BOARD_SIZE-1 and row-2 >= 0) or (col == BOARD_SIZE-2 and row-2 >= 0):
                      #check for the diagonal capture left move validity
                     if isinstance(self.board[row-1][col-1][1], Piece):
-                        #if on diagonal to the left we have a white piece, 
+                        #if on diagonal to the left we have a white piece,
                         #we might be able to capture
                         if self.board[row-1][col-1][1].isBlack != isBlackKing:
                             #check it is on board dimensions
@@ -228,12 +229,12 @@ class CheckersBoard:
                                     nodeWithInfo = [captureTreeNode, row-2,col-2]
                                     return nodeWithInfo
 
-    
+
     def getNormalMoves(self,colorForMoves):
         listOfNormalMoves =  []
         #the way of checking depends on the color of the piece
         if colorForMoves == MIN:
-            #we iterate over the positions and see if the normal squares for 
+            #we iterate over the positions and see if the normal squares for
             #a move are free, in case of the king we look also backwards
             for positionOfPiece in self.blackPiecesPositions:
                 row = positionOfPiece[0]
@@ -256,7 +257,7 @@ class CheckersBoard:
                     if self.board[row+1][col-1][1] is None:
                         moveTreeNode = self.generateTreeNodeWithMove(row,col,row+1,col-1)
                         listOfNormalMoves.append(moveTreeNode)
-                        
+
             #check for black kings moves, now backwards
             for positionOfPiece in [pos for pos in self.blackPiecesPositions if self.board[pos[0]][pos[1]][1].isKing == True]:
                 row = positionOfPiece[0]
@@ -276,9 +277,9 @@ class CheckersBoard:
                      if self.board[row-1][col-1][1] is None:
                         moveTreeNode = self.generateTreeNodeWithMove(row,col,row-1,col-1)
                         listOfNormalMoves.append(moveTreeNode)
-        #white's possible moves        
+        #white's possible moves
         else:
-            #we iterate over the positions and see if the normal squares for 
+            #we iterate over the positions and see if the normal squares for
             #a move are free, in case of the king we look also backwards
             for positionOfPiece in self.whitePiecesPositions:
                 row = positionOfPiece[0]
@@ -301,7 +302,7 @@ class CheckersBoard:
                     if self.board[row-1][col-1][1] is None:
                         moveTreeNode = self.generateTreeNodeWithMove(row,col,row-1,col-1)
                         listOfNormalMoves.append(moveTreeNode)
-        
+
             #check for white kings moves, now backwards
             for positionOfPiece in [pos for pos in self.whitePiecesPositions if self.board[pos[0]][pos[1]][1].isKing == True]:
                 row = positionOfPiece[0]
@@ -322,8 +323,8 @@ class CheckersBoard:
                         moveTreeNode = self.generateTreeNodeWithMove(row,col,row+1,col-1)
                         listOfNormalMoves.append(moveTreeNode)
         return listOfNormalMoves
-        
-        
+
+
     def generateTreeNodeWithMove(self, rowOrigin, colOrigin, rowDest, colDest):
       #copy of the board to have the required version of it
       boardCopy = copy.deepcopy(self.board)
@@ -340,9 +341,9 @@ class CheckersBoard:
       boardCopy[rowDest][colDest] = pieceToMove
       treeNodeGeneratedByMove = TreeNode(boardCopy)
       return treeNodeGeneratedByMove
-  
-    
-    
+
+
+
     def generateTreeNodeWithCapture(self,rowOrigin, colOrigin, rowDest,colDest,extraBoardForCaptures):
         boardCopy = None
         pieceToMove = None
@@ -379,7 +380,7 @@ class CheckersBoard:
         boardCopy[rowToDelete][colToDelete] = [True,None]
         treeNodeGeneratedByCapture = TreeNode(boardCopy)
         return treeNodeGeneratedByCapture
-    
+
     def checkForMoreCaptures(self, originalCaptureNode, row, col):
         #first we check if it is a king
         boardForChecking = copy.deepcopy(originalCaptureNode.boardObject.board)
@@ -422,7 +423,7 @@ class CheckersBoard:
                                     newNode = self.generateTreeNodeWithCapture(row,col,row+2,col-2, copy.deepcopy(boardForChecking))
                                     #add it to the listOfCaptures
                                     listOfCaptures.append([newNode,row+2,col-2])
-                                    
+
             if col != 0 and col != BOARD_SIZE-2 and col != BOARD_SIZE-1 and row > 1:
                     if isinstance(boardForChecking[row-1][col-1][1], Piece):
                         if boardForChecking[row-1][col-1][1].isBlack != colorIsBlack:
@@ -534,7 +535,3 @@ class CheckersBoard:
             return listOfCaptures
         else:
             return []
-
-
-
-

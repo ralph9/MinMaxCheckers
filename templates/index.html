@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>{{startValue}}</h1>
+    <div style="white-space: pre-wrap;">{{boardState}}</div>
+    <form action="/newmove/" method="post">
+      <p>
+        Origin position:
+      </p>
+      <input type="text" name="originX" value="">
+      <input type="text" name="originY" value="">
+      <p>
+        Destination
+      </p>
+      <input type="text" name="destX" value="">
+      <input type="text" name="destY" value="">
+      <br>
+      <button name="submitMove" type="submit">Move</button>
+    </form>
+  </body>
+</html>

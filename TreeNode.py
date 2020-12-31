@@ -20,7 +20,7 @@ class TreeNode:
     def __init__(self,board):
         from Board import CheckersBoard
         self.boardObject = CheckersBoard(board)
-        
+
     def evaluationOfNode(self):
         #The evaluation depends on the stage of the game
         #which can be delimited by the number of pieces left
@@ -46,38 +46,38 @@ class TreeNode:
                     elif boardRef[i][j][1].isBlack == False and boardRef[i][j][1].isKing == False:
                         numberOfWhitePieces += 1
                         whitePositions.append([i,j])
-        
+
         positionSpectrumWhite = 0
         positionSpectrumBlack = 0
-    
+
         ################################
         #ENDGAME
         #once we reach the endgame the evaluation prefers the kings in the middle of the board
         if numberOfWhitePieces + numberOfWhiteKings < 5 and numberOfBlackPieces + numberOfBlackKings < 5:
             positionSpectrumWhite = int(self.calculatePositionsValueForEndgame(whitePositions,MAX)) * 0.5
             positionSpectrumBlack = int(self.calculatePositionsValueForEndgame(blackPositions,MIN)) *0.5
-            
+
         numberOfWhitePieces *= 2
         numberOfWhiteKings *= 4
         numberOfBlackPieces *= 2
         numberOfWhiteKings *= 4
-            
-        
+
+
         trappedWhitePieces = int(self.calculateNumberOfTrappedPieces(whitePositions,MAX)) * 0.75
         trappedBlackPieces = int(self.calculateNumberOfTrappedPieces(blackPositions,MIN)) * 0.75
-        
+
         whitePiecesInDanger = int(self.calculateNumberOfPiecesInDanger(MAX)) * 1.75
         blackPiecesInDanger = int(self.calculateNumberOfPiecesInDanger(MIN)) * 1.75
 
         numberOfWhiteMoves = int(len(self.boardObject.getNormalMoves(MAX))) * 0.5
         numberOfBlackMoves = int(len(self.boardObject.getNormalMoves(MIN))) * 0.5
-        
+
         whiteScore = numberOfWhitePieces + numberOfWhiteKings + positionSpectrumWhite + numberOfWhiteMoves  - whitePiecesInDanger - trappedWhitePieces
         blackScore = numberOfBlackPieces + numberOfBlackKings + positionSpectrumBlack + numberOfBlackMoves  - blackPiecesInDanger - trappedBlackPieces
-        
+
         return whiteScore - blackScore
-    
-    
+
+
     def evaluationOfNodeAggressive(self):
         #The evaluation depends on the stage of the game
         #which can be delimited by the number of pieces left
@@ -103,15 +103,15 @@ class TreeNode:
                     elif boardRef[i][j][1].isBlack == False and boardRef[i][j][1].isKing == False:
                         numberOfWhitePieces += 1
                         whitePositions.append([i,j])
-        
+
         positionSpectrumWhite = 0
         positionSpectrumBlack = 0
-        
+
         numberOfWhitePieces *= 1.75
         numberOfWhiteKings *= 4.25
         numberOfBlackPieces *= 1.75
         numberOfWhiteKings *= 4.25
-    
+
         ################################
         #ENDGAME
         #once we reach the endgame the evaluation prefers the kings in the middle of the board
@@ -121,33 +121,33 @@ class TreeNode:
         else:
             positionSpectrumBlack = self.calculatePositionsValue(blackPositions,MIN) * 0.75
             positionSpectrumWhite = self.calculatePositionsValue(whitePositions,MAX) * 0.75
-        
+
         trappedWhitePieces = int(self.calculateNumberOfTrappedPieces(whitePositions,MAX)) * 1.25
         trappedBlackPieces = int(self.calculateNumberOfTrappedPieces(blackPositions,MIN)) * 1.25
-        
+
         whitePiecesInDanger = int(self.calculateNumberOfPiecesInDanger(MAX)) * 1.25
         blackPiecesInDanger = int(self.calculateNumberOfPiecesInDanger(MIN)) * 1.25
-        
+
         numberOfWhiteMoves = int(len(self.boardObject.getNormalMoves(MAX))) * 0.75
         numberOfBlackMoves = int(len(self.boardObject.getNormalMoves(MIN))) * 0.75
-        
-        whiteScore = numberOfWhitePieces + numberOfWhiteKings + positionSpectrumWhite + numberOfWhiteMoves  - whitePiecesInDanger  - trappedWhitePieces   
+
+        whiteScore = numberOfWhitePieces + numberOfWhiteKings + positionSpectrumWhite + numberOfWhiteMoves  - whitePiecesInDanger  - trappedWhitePieces
         blackScore = numberOfBlackPieces + numberOfBlackKings + positionSpectrumBlack + numberOfBlackMoves  - blackPiecesInDanger  - trappedBlackPieces
-        
+
         return whiteScore - blackScore
-    
-    
-    
-    
-    
+
+
+
+
+
     def calculateNumberOfPiecesInDanger(self,colorOfPieces):
         if colorOfPieces == MAX:
             return len(self.boardObject.getPossibleCaptures(MIN))
-            
+
         else:
             return len(self.boardObject.getPossibleCaptures(MAX))
-        
-    
+
+
     def calculateNumberOfTrappedPieces(self,positionsOfPieces, colorForCalculation):
         trappedPieces = 0
         boardForCalculations = self.boardObject.board
@@ -172,7 +172,7 @@ class TreeNode:
             for position in positionsOfPieces:
                 row = position[0]
                 col = position[1]
-                pieceForIteration = boardForCalculations[row][col] 
+                pieceForIteration = boardForCalculations[row][col]
                 if pieceForIteration[0] == False:
                     print(row)
                     print(col)
@@ -187,7 +187,7 @@ class TreeNode:
                 trappedPieces += 1
         #we return the final number of trapped kings of the given color
         return trappedPieces
-    
+
     #since it is a king we have to look in both directions for a move
     def checkKingMobility(self,row,col):
         boardForCalculations = self.boardObject.board
@@ -216,7 +216,7 @@ class TreeNode:
             else:
                 if boardForCalculations[row-1][col-1][1] is None or boardForCalculations[row-1][col+1][1] is None:
                     return True
-            
+
     def calculatePositionsValue(self,positionsOfPieces, colorForCalculation):
         valueOfPositions = 0
         if colorForCalculation == MAX:
@@ -230,8 +230,8 @@ class TreeNode:
                 if self.boardObject.board[position[0]][position[1]][1].isKing == False:
                     valueOfPositions += position[0]
         return valueOfPositions
-        
-    
+
+
     def calculatePositionsValueForEndgame(self, positionsOfPieces, colorForCalculation):
         valueOfPositions = 0
         if colorForCalculation == MAX:
@@ -250,10 +250,10 @@ class TreeNode:
                 elif position[0] == int(BOARD_SIZE/2) or position[0] == int(BOARD_SIZE/2 -1) or position[0] == int(BOARD_SIZE/2 +1):
                         valueOfPositions += 4
         return valueOfPositions
-        
-        
-        
-        
+
+
+
+
     #method to find out if the game is over
     #two possibilities, one side hasn't got any more pieces
     #or cannot move any of the pieces
@@ -269,19 +269,19 @@ class TreeNode:
                     noMoreWhitePieces = False
                     break
         else:
-            noMoreBlackPieces = True        
+            noMoreBlackPieces = True
             for row in self.boardObject.board:
              for cell in row:
                if isinstance(cell[1],Piece):
                 if cell[1].isBlack:
                     noMoreBlackPieces = False
                     break
-            
+
         if noMoreBlackPieces and not currentTurnWhite:
             return True
         if noMoreWhitePieces and currentTurnWhite:
             return True
-        
+
         #now onto the second check, gotta see if there's any available move
         if self.currentTurnWhite:
             if self.boardObject.getAllPossibleMoves(MAX) == []:
@@ -289,7 +289,7 @@ class TreeNode:
         else:
             if self.boardObject.getAllPossibleMoves(MIN) == []:
                 return True
-            
+
     def printTreeNode(self):
         for row in self.boardObject.board:
             for square in row:
@@ -304,35 +304,35 @@ class TreeNode:
                         elif square[1].isBlack == False and square[1].isKing == False:
                             print(" ○ ",end="")
                         else:
-                            print(" ⚇ ",end="")  
+                            print(" ⚇ ",end="")
                     else:
                         print(" - ", end="")
             print("")
-    
+
+    def getNodeString(self):
+        nodeString = ""
+        for row in self.boardObject.board:
+            for square in row:
+                if(square[0] == False):
+                    nodeString += " - "
+                else:
+                    if square[1] is not None:
+                        if square[1].isBlack and square[1].isKing == False:
+                            nodeString += " ● "
+                        elif square[1].isBlack and square[1].isKing:
+                            nodeString += " ⚉ "
+                        elif square[1].isBlack == False and square[1].isKing == False:
+                            nodeString += " ○ "
+                        else:
+                            nodeString += " ⚇ "
+                    else:
+                        nodeString += " - "
+            nodeString += "\n"
+        return nodeString
+
+
+
     #call to the move from the CheckersBoardClass to get the available moves,
     #either captures or normal ones
     def getAllPossibleMoves(self,colorForMoves):
         return self.boardObject.getAllPossibleMoves(colorForMoves)
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
