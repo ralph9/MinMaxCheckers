@@ -107,12 +107,12 @@ class CheckersGame:
         #               print("game ended, black won")
     def playerTurn(self, oX,oY,dX,dY):
         global currentNode, currentBoardState
-        currentNode = currentNode.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
-        currentNode.printTreeNode()
-        currentBoardState = currentNode.getNodeString()
-        currentNode.currentTurnWhite = False
+        self.currentNode = self.currentNode.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
+        self.currentNode.printTreeNode()
+        self.currentBoardState = self.currentNode.getNodeString()
+        self.currentNode.currentTurnWhite = False
         print("turn over")
-        if currentNode.isGameOver("black"):
+        if self.currentNode.isGameOver("black"):
             print("game ended, white won")
 
 
