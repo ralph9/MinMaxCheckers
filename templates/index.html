@@ -3,24 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <h1>{{startValue}}</h1>
-    <div style="white-space: pre-wrap;">{{boardState}}</div>
+    <div id="board" style="white-space: pre-wrap;">{{boardState}}</div>
     <form action="/usermove/" method="post">
-      <p>
+      <p class="positionText">
         Origin position:
       </p>
-      <input type="text" name="originX" value="">
-      <input type="text" name="originY" value="">
-      <p>
+      <input type="text" name="originX" value="" placeholder="column">
+      <input type="text" name="originY" value="" placeholder="row">
+      <p class="positionText">
         Destination
       </p>
-      <input type="text" name="destX" value="">
-      <input type="text" name="destY" value="">
+      <input type="text" name="destX" value="" placeholder="column">
+      <input type="text" name="destY" value="" placeholder="row">
       <br>
-      <button name="submitMove" type="submit">Move</button>
+      <button id="submitMove" name="submitMove" type="submit">Move</button>
     </form>
     <script type="text/javascript"
          src="{{ url_for('static', filename='scriptIndex.js') }}"></script>
