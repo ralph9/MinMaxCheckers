@@ -59,7 +59,7 @@ def usermove(startValue="Your turn"):
         #return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard)
     else:
         print("direct red")
-        return render_template('index.html',startValue=startValue,boardState=currentBoard,vars="ye")
+        return render_template('index.html',startValue=startValue,boardState=currentBoard,vars="")
 
 @app.route('/compmove/', methods=['POST',"GET"])
 def compmove(startValue="The computer is thinking"):
@@ -69,7 +69,7 @@ def compmove(startValue="The computer is thinking"):
     #crear thread con computer turn y renderizar template entre tanto
     thComp = threading.Thread(target=computerMoveProcessing)
     thComp.start()
-    return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard,vars="startedThink")
+    return render_template('computerThinking.html',startValue=startValue,boardState=currentBoard,vars="startedThink")
 
 
 @app.route('/compmove/', methods=["POST"])

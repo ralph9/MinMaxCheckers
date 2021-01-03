@@ -23,28 +23,3 @@ h1{
 div#board{
   margin: 60px;
 }
-
-input{
-  padding:10px;
-  border:1px solid black;
-  border-radius: 3px;
-  font-family: sans-serif;
-  margin-bottom: 30px;
-}
-
-p.positionText{
-  font-family: sans-serif;
-  font-size:20px;
-}
-
-
-button#submitMove{
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid black;
-  border-radius: 3px;
-}
-
-button#submitMove:hover{
-  background-color: #95a5a6;
-}

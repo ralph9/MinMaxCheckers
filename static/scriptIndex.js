@@ -27,3 +27,31 @@ function abortRequest(){
   // console.log(requestForEnd);
   // requestForEnd.abort();
 }
+
+
+jQuery(document).ready(function()
+{
+    jQuery('input').each(function()
+    {
+        if (jQuery(this).attr('placeholder') && jQuery(this).attr('placeholder') != '')
+        {
+            jQuery(this).attr( 'data-placeholder', jQuery(this).attr('placeholder') );
+        }
+    });
+
+    jQuery('input').focus(function()
+    {
+        if (jQuery(this).attr('data-placeholder') && jQuery(this).attr('data-placeholder') != '')
+        {
+            jQuery(this).attr('placeholder', '');
+        }
+    });
+
+    jQuery('input').blur(function()
+    {
+        if (jQuery(this).attr('data-placeholder') && jQuery(this).attr('data-placeholder') != '')
+        {
+            jQuery(this).attr('placeholder', jQuery(this).attr('data-placeholder'));
+        }
+    });
+});  
