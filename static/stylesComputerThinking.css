@@ -21,8 +21,10 @@ h1{
   display: inline;
 }
 
-div#waitingDots{
-  display: inline;
+span#waitingDots{
+  font-size: 26px;
+  width: 40px;
+  display: inline-block;
 }
 
 div#board{

@@ -24,8 +24,6 @@ function doPoll(){
 function abortRequest(){
   console.log("aborting polling now");
   clearTimeout(timeoutPoll);
-  // console.log(requestForEnd);
-  // requestForEnd.abort();
 }
 
 
@@ -38,7 +36,6 @@ jQuery(document).ready(function()
             jQuery(this).attr( 'data-placeholder', jQuery(this).attr('placeholder') );
         }
     });
-
     jQuery('input').focus(function()
     {
         if (jQuery(this).attr('data-placeholder') && jQuery(this).attr('data-placeholder') != '')
@@ -46,7 +43,6 @@ jQuery(document).ready(function()
             jQuery(this).attr('placeholder', '');
         }
     });
-
     jQuery('input').blur(function()
     {
         if (jQuery(this).attr('data-placeholder') && jQuery(this).attr('data-placeholder') != '')
@@ -54,4 +50,4 @@ jQuery(document).ready(function()
             jQuery(this).attr('placeholder', jQuery(this).attr('data-placeholder'));
         }
     });
-});  
+});

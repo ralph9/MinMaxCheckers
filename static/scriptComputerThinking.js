@@ -1,6 +1,6 @@
 function myFunc(vars) {
   if(vars === "startedThink"){
-    console.log("computer started thinking bv");
+    console.log("computer started thinking b");
     doPoll();
   }
 }
@@ -21,8 +21,9 @@ function doPoll(){
 
 var dots = window.setInterval( function() {
     var wait = document.getElementById("waitingDots");
+    console.log("ag");
     if ( wait.innerHTML.length > 2 )
-        wait.innerHTML = "   ";
+        wait.innerHTML = "";
     else
         wait.innerHTML += ".";
-    }, 900);
+    }, 300);
