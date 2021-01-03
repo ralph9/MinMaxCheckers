@@ -3,9 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <h1>{{startValue}}</h1>
     <div style="white-space: pre-wrap;">{{boardState}}</div>
+    <script type="text/javascript"
+         src="{{ url_for('static', filename='scriptIndex.js') }}"></script>
+    </script>
+    <script>
+      console.log("anotherpl");
+      myFunc({{vars|tojson}});
+    </script>
   </body>
 </html>
