@@ -40,6 +40,8 @@ def start():
 
 @app.route('/usermove/',methods=["POST","GET"])
 def usermove(startValue="Your turn"):
+    global computerIsDone
+    computerIsDone = False
     currentBoard = check.currentBoardState
     if not request.form.get('originX','') == '':
         originX = int(request.form.get('originX', ''))
@@ -47,6 +49,7 @@ def usermove(startValue="Your turn"):
         destX = int(request.form.get('destX', ''))
         destY = int(request.form.get('destY', ''))
         moveCoordinates = str(originX) + str(originY) + str(destX) + str(destY)
+        #calculate if move is possible and redirect to usermove again if not valid with a new startvalue
         print("coordinates:")
         print(moveCoordinates)
         if check.currentNode.currentTurnWhite:
@@ -60,39 +63,28 @@ def usermove(startValue="Your turn"):
 
 @app.route('/compmove/', methods=['POST',"GET"])
 def compmove(startValue="The computer is thinking"):
+    # global computerIsDone
+    # computerIsDone = False
     currentBoard = check.currentBoardState
     #crear thread con computer turn y renderizar template entre tanto
     thComp = threading.Thread(target=computerMoveProcessing)
     thComp.start()
     return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard,vars="startedThink")
-    # check.computerTurn()
-    # currentBoard = check.currentBoardState
-    # return redirect(url_for("usermove"))
+
 
 @app.route('/compmove/', methods=["POST"])
 def computerMoveProcessing(startValue="Your turn"):
     global computerIsDone
     check.computerTurn()
     currentBoard = check.currentBoardState
-    # with app.app_context():
-    #     print("with context")
-    #     return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard,vars="aaaaaeeeee")
-
-    #print("computer turn over")
-    #urlUser = "localhost:5000/usermove/"
-    #print(urlUser)
     computerIsDone = True
-    compdone()
 
 
 @app.route('/compdone/', methods=["POST"])
 def compdone():
     global computerIsDone
-    print(computerIsDone)
     if computerIsDone:
-        with app.app_context():
-            print("cambio de var")
-            return "DONE"
+        return "DONE"
     return "NOT DONE"
 
 
