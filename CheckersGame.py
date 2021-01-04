@@ -105,12 +105,12 @@ class CheckersGame:
         #           currentNode.currentTurnWhite = True
         #           if currentNode.isGameOver("white"):
         #               print("game ended, black won")
-    def playerTurn(self, oX,oY,dX,dY):
+    def playerTurn(self, oX,oY,dX,dY,nodePassed):
         global currentNode, currentBoardState
-        if len(self.currentNode.boardObject.getPossibleCaptures("white")) != 0:
-            self.currentNode = self.currentNode.boardObject.generateTreeNodeWithCapture(oX,oY,dX,dY,None)
+        if len(nodePassed.boardObject.getPossibleCaptures("white")) != 0:
+            self.currentNode = nodePassed.boardObject.generateTreeNodeWithCapture(oX,oY,dX,dY,None)
         else:
-            self.currentNode = self.currentNode.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
+            self.currentNode = nodePassed.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
         self.currentNode.printTreeNode()
         self.currentBoardState = self.currentNode.getNodeString()
         self.currentNode.currentTurnWhite = False
@@ -119,9 +119,9 @@ class CheckersGame:
             print("game ended, white won")
 
 
-    def computerTurn(self):
+    def computerTurn(self,nodePassed):
         global currentNode, currentBoardState, currentTurnWhite
-        nodeToPass = copy.deepcopy(self.currentNode)
+        nodeToPass = copy.deepcopy(nodePassed)
         print("computer is thinking")
         self.evaluation, self.currentNode = self.ai.minmax(nodeToPass, 4, False)
         self.currentNode.printTreeNode()

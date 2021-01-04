@@ -60,7 +60,7 @@ def usermove(startValue="Your turn"):
         print("coordinates:")
         print(moveCoordinates)
         if check.currentNode.currentTurnWhite:
-            check.playerTurn(originX,originY,destX,destY)
+            check.playerTurn(originX,originY,destX,destY,check.currentNode)
             return redirect(url_for("compmove"))
         currentBoard = check.currentBoardState
         #return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard)
@@ -92,7 +92,7 @@ def compmove(startValue="The computer is thinking"):
 @app.route('/compmove/', methods=["POST"])
 def computerMoveProcessing(startValue="Your turn"):
     global computerIsDone
-    check.computerTurn()
+    check.computerTurn(check.currentNode)
     currentBoard = check.currentBoardState
     computerIsDone = True
 
