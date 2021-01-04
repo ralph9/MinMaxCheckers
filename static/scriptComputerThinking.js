@@ -18,7 +18,7 @@ function doPoll(){
       console.log(data);
       if (data == "DONE"){
         console.log(data);
-        window.location.replace("https://checkers-vs-computer.herokuapp.com:5000/usermove");
+        window.location.replace("https://checkers-vs-computer.herokuapp.com/usermove");
       }
       timeoutPoll = setTimeout(doPoll,2000);
     });
