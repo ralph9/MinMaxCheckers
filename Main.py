@@ -78,6 +78,8 @@ def check_coordinates(oX,oY,dX,dY):
 
 @app.route('/compmove/', methods=['POST',"GET"])
 def compmove(startValue="The computer is thinking"):
+    if check.currentNode.currentTurnWhite:
+        return
     # global computerIsDone
     # computerIsDone = False
     currentBoard = check.currentBoardState
