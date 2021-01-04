@@ -1,6 +1,12 @@
 $(document).ready(function () {
-    console.log("now");
     $("#hidden").hide().css({visibility: "visible"}).fadeIn(1800);
+    if($("#hidden").text().charAt(0) === "M"){
+      $("#hidden").css({color: "red"}).delay(3000);
+      /*setTimeout(
+        function(){$("#hidden").css({color: "black"});
+      }, 1500);
+      */
+    }
 });
 
 function myFunc(vars) {
