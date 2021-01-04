@@ -62,7 +62,6 @@ h5py==2.10.0
 HeapDict==1.0.1
 httplib2==0.18.1
 hurry.filesize==0.9
-io_1594161405741/work
 imagesize==1.2.0
 imutils==0.5.3
 ipython-genutils==0.2.0
@@ -250,7 +249,6 @@ pyobjc-framework-VideoSubscriberAccount==7.0.1
 pyobjc-framework-VideoToolbox==7.0.1
 pyobjc-framework-Vision==7.0.1
 pyobjc-framework-WebKit==7.0.1
-pyodbc===4.0.0-unsupported
 pyparsing==2.4.7
 pyrsistent==0.16.0
 pytesseract==0.3.6
