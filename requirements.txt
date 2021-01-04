@@ -64,10 +64,6 @@ jdcal==1.4.1
 Jinja2==2.11.2
 JSON-minify==0.3.0
 json5==0.9.5
-jupyter==1.0.0
-jupyter-console==6.1.0
-jupyter-core==4.6.3
-jupyterlab==2.1.5
 keyboard==0.13.5
 kiwisolver==1.2.0
 kombu==5.0.2
@@ -125,7 +121,6 @@ QtPy==1.9.0
 requests-oauthlib==1.3.0
 rope==0.17.0
 rsa==4.6
-Rtree==0.9.4
 ruamel-yaml==0.15.87
 seaborn==0.10.1
 Send2Trash==1.5.0
