@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    console.log("now");
+    $("#hidden").hide().css({visibility: "visible"}).fadeIn(1800);
+});
+
 function myFunc(vars) {
   if(vars === "startedThink"){
     console.log("computer thinking");

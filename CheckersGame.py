@@ -107,7 +107,10 @@ class CheckersGame:
         #               print("game ended, black won")
     def playerTurn(self, oX,oY,dX,dY):
         global currentNode, currentBoardState
-        self.currentNode = self.currentNode.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
+        if len(self.currentNode.boardObject.getPossibleCaptures("white")) != 0:
+            self.currentNode = self.currentNode.boardObject.generateTreeNodeWithCapture(oX,oY,dX,dY,None)
+        else:
+            self.currentNode = self.currentNode.boardObject.generateTreeNodeWithMove(oX,oY,dX,dY)
         self.currentNode.printTreeNode()
         self.currentBoardState = self.currentNode.getNodeString()
         self.currentNode.currentTurnWhite = False

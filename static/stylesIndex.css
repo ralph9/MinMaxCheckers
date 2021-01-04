@@ -20,6 +20,13 @@ h1{
   letter-spacing: 2px;
 }
 
+h1#hidden{
+  visibility: hidden;
+  font-family:'robotothin';
+  margin: 80px auto;
+  letter-spacing: 2px;
+}
+
 div#board{
   display: block;
   margin: 60px;
@@ -30,12 +37,13 @@ input{
   border:1px solid black;
   border-radius: 3px;
   font-family: sans-serif;
-  margin-bottom: 30px;
+  margin: 30px 30px;
 }
 
 p.positionText{
   font-family: sans-serif;
   font-size:20px;
+  margin-top: 30px;
 }
 
 button#submitMove{
@@ -43,11 +51,10 @@ button#submitMove{
   width: 10%;
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 3px;
 }
 
 button#submitMove:hover{
   background-color: #95a5a6;
-  font-weight: bold;
 }

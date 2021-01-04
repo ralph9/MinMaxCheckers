@@ -30,7 +30,7 @@ check = CheckersGame()
 check.play()
 startingBoard = check.currentBoardState
 computerIsDone = False
-
+maxDimension = 7;
 
 @app.route('/')
 def start():
@@ -48,6 +48,10 @@ def usermove(startValue="Your turn"):
         originY = int(request.form.get('originY', ''))
         destX = int(request.form.get('destX', ''))
         destY = int(request.form.get('destY', ''))
+        coordinatesAreValid = check_coordinates(originX, originY,destX,destY)
+        if not coordinatesAreValid:
+            startValue = "Move not possible, try again"
+            return render_template('index.html',startValue=startValue,boardState=currentBoard,vars="")
         moveCoordinates = str(originX) + str(originY) + str(destX) + str(destY)
         #calculate if move is possible and redirect to usermove again if not valid with a new startvalue
         print("coordinates:")
@@ -60,6 +64,14 @@ def usermove(startValue="Your turn"):
     else:
         print("direct red")
         return render_template('index.html',startValue=startValue,boardState=currentBoard,vars="")
+
+def check_coordinates(oX,oY,dX,dY):
+    if oX > maxDimension or oY > maxDimension or dX > maxDimension or dY > maxDimension:
+        return False
+    if oX < 0 or oY < 0 or dX < 0 or dY < 0:
+        return False
+    return True
+
 
 @app.route('/compmove/', methods=['POST',"GET"])
 def compmove(startValue="The computer is thinking"):

@@ -18,12 +18,22 @@ h1{
   font-family:'robotothin';
   margin: 80px auto;
   letter-spacing: 2px;
-  display: inline;
+  display: inline-block;
+}
+
+h1#hidden{
+  visibility: hidden;
+  font-family:'robotothin';
+  margin: 80px auto;
+  letter-spacing: 2px;
+  display: inline-block;
 }
 
 span#waitingDots{
-  font-size: 26px;
+  font-family:'robotothin';
+  font-size: 36px;
   width: 40px;
+  height: 30px;
   display: inline-block;
 }
 

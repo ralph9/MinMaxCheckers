@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    console.log("now");
+    $("#hidden").hide().css({visibility: "visible"}).fadeIn(1800);
+});
+
+
 function myFunc(vars) {
   if(vars === "startedThink"){
     console.log("computer started thinking b");
@@ -21,7 +27,6 @@ function doPoll(){
 
 var dots = window.setInterval( function() {
     var wait = document.getElementById("waitingDots");
-    console.log("ag");
     if ( wait.innerHTML.length > 2 )
         wait.innerHTML = "";
     else
