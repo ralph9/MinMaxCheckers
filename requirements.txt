@@ -28,7 +28,6 @@ click==7.1.2
 click-didyoumean==0.0.3
 click-plugins==1.1.1
 click-repl==0.1.6
-clyent==1.2.2
 colorama==0.4.3
 conda==4.8.5
 conda-build==3.18.11
