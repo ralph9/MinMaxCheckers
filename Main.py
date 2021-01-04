@@ -42,7 +42,7 @@ def start():
 
 
 @app.route('/usermove/',methods=["POST","GET"])
-def user_move(startValue="Your turn"):
+def usermove(startValue="Your turn"):
     global computerIsDone, currentBoard
     computerIsDone = False
     currentBoard = check.currentBoardState
@@ -76,7 +76,7 @@ def check_coordinates(oX,oY,dX,dY):
 
 
 @app.route('/compmove/', methods=['POST',"GET"])
-def computer_move(startValue="The computer is thinking"):
+def compmove(startValue="The computer is thinking"):
     global currentBoard
     currentBoard = check.currentBoardState
     if computerIsDone == False:
@@ -99,7 +99,7 @@ def computer_move_processing(startValue="Your turn"):
 
 
 @app.route('/compdone/', methods=["POST"])
-def computer_done():
+def compdone():
     if computerIsDone:
         return "DONE"
     return "NOT DONE"
