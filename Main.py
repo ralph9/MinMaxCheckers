@@ -33,17 +33,17 @@ check = CheckersGame()
 check.play()
 startingBoard = check.currentBoardState
 computerIsDone = False
-maxDimension = 7;
+MAX_BOARD_DIMENSION = 7;
+currentBoard = None
 
 @app.route('/')
 def start():
     return redirect(url_for("usermove"))
-    #startValue="starting game..."
-    #return render_template('index.html',startValue=startValue,boardState=startingBoard)
+
 
 @app.route('/usermove/',methods=["POST","GET"])
-def usermove(startValue="Your turn"):
-    global computerIsDone
+def user_move(startValue="Your turn"):
+    global computerIsDone, currentBoard
     computerIsDone = False
     currentBoard = check.currentBoardState
     if not request.form.get('originX','') == '':
@@ -63,13 +63,12 @@ def usermove(startValue="Your turn"):
             check.playerTurn(originX,originY,destX,destY,check.currentNode)
             return redirect(url_for("compmove"))
         currentBoard = check.currentBoardState
-        #return render_template('indexPlayer.html',startValue=startValue,boardState=currentBoard)
     else:
         print("direct red")
         return render_template('index.html',startValue=startValue,boardState=currentBoard,vars="")
 
 def check_coordinates(oX,oY,dX,dY):
-    if oX > maxDimension or oY > maxDimension or dX > maxDimension or dY > maxDimension:
+    if oX > MAX_BOARD_DIMENSION or oY > MAX_BOARD_DIMENSION or dX > MAX_BOARD_DIMENSION or dY > MAX_BOARD_DIMENSION:
         return False
     if oX < 0 or oY < 0 or dX < 0 or dY < 0:
         return False
@@ -77,29 +76,30 @@ def check_coordinates(oX,oY,dX,dY):
 
 
 @app.route('/compmove/', methods=['POST',"GET"])
-def compmove(startValue="The computer is thinking"):
+def computer_move(startValue="The computer is thinking"):
+    global currentBoard
+    currentBoard = check.currentBoardState
+    if computerIsDone == False:
+        return
     if check.currentNode.currentTurnWhite:
         return render_template('index.html',startValue="Your turn",boardState=currentBoard,vars="")
-    # global computerIsDone
-    # computerIsDone = False
-    currentBoard = check.currentBoardState
     #crear thread con computer turn y renderizar template entre tanto
-    thComp = threading.Thread(target=computerMoveProcessing)
+    thComp = threading.Thread(target=computer_move_processing)
     thComp.start()
     return render_template('computerThinking.html',startValue=startValue,boardState=currentBoard,vars="startedThink")
 
 
-@app.route('/compmove/', methods=["POST"])
-def computerMoveProcessing(startValue="Your turn"):
-    global computerIsDone
-    check.computerTurn(check.currentNode)
-    currentBoard = check.currentBoardState
-    computerIsDone = True
+@app.route('/compmove/')
+def computer_move_processing(startValue="Your turn"):
+    global currentBoard, computerIsDone
+    if computerIsDone == False:
+        check.computerTurn(check.currentNode)
+        currentBoard = check.currentBoardState
+        computerIsDone = True
 
 
 @app.route('/compdone/', methods=["POST"])
-def compdone():
-    global computerIsDone
+def computer_done():
     if computerIsDone:
         return "DONE"
     return "NOT DONE"
