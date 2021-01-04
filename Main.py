@@ -20,7 +20,7 @@ import threading
 import os
 
 app = Flask(__name__)
-app.config['SERVER_NAME']='https://checkers-vs-computer.herokuapp.com:5000'
+app.config['SERVER_NAME']='https://0.0.0.0:5000'
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port, debug=True)
 #app.config['DEBUG'] = True
