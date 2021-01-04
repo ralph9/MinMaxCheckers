@@ -79,8 +79,6 @@ def check_coordinates(oX,oY,dX,dY):
 def compmove(startValue="The computer is thinking"):
     global currentBoard
     currentBoard = check.currentBoardState
-    if computerIsDone == False:
-        return
     if check.currentNode.currentTurnWhite:
         return render_template('index.html',startValue="Your turn",boardState=currentBoard,vars="")
     #crear thread con computer turn y renderizar template entre tanto
