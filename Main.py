@@ -19,9 +19,9 @@ from CheckersGame import CheckersGame
 import threading
 
 app = Flask(__name__)
-app.config['SERVER_NAME']='https://checkers-vs-computer.herokuapp.com'
+app.config['SERVER_NAME']='https://checkers-vs-computer.herokuapp.com:5000'
 #app.config['DEBUG'] = True
-#app.run(host="127.0.0.1",port=5000)
+app.run(host="0.0.0.0",port=5000)
 # with app.app_context(), app.test_request_context():
 #     url = url_for('templates')
 
