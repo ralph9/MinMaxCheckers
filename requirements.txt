@@ -81,7 +81,6 @@ locket==0.2.0
 Markdown==3.3
 matplotlib==3.3.2
 mock==4.0.2
-navigator-updater==0.2.1
 nbformat==5.0.7
 node==0.9.25
 notebook==6.0.3
@@ -251,7 +250,6 @@ rope==0.17.0
 rsa==4.6
 Rtree==0.9.4
 ruamel-yaml==0.15.87
-scikit-image==0.16.2
 seaborn==0.10.1
 Send2Trash==1.5.0
 simplegeneric==0.8.1
@@ -272,7 +270,6 @@ tables==3.6.1
 tblib==1.6.0
 tensorboard==2.3.0
 tensorboard-plugin-wit==1.7.0
-tensorflow-estimator==2.3.0
 termcolor==1.1.0
 terminado==0.8.3
 testpath==0.4.4
